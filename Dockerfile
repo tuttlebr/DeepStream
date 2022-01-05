@@ -62,4 +62,4 @@ WORKDIR /opt/nvidia/deepstream/deepstream/samples/configs/tao_pretrained_models
 COPY tao_pretrained_models/ .
 RUN ./download_models.sh
 
-USER ${NB_USER}
+# USER ${NB_USER}
