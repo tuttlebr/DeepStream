@@ -1,78 +1,26 @@
 services:
-  deepstream:
-    build:
-      context: .
-      args:
-        - BASE_IMAGE=nvcr.io/nvidia/deepstream:6.0-samples
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
-    environment:
-      - DISPLAY=$DISPLAY
-    entrypoint:
-      [
-        "jupyter",
-        "lab",
-        "--ip=0.0.0.0",
-        "--no-browser",
-        "--allow-root",
-        "--port=8888",
-        "--ServerApp.token=''",
-        "--ServerApp.password=''",
-        "--ServerApp.allow_origin='*'",
-        "--ServerApp.base_url=/",
-      ]
-    hostname: deepstream
-    image: deepstream:6.0-jupyter
-    platform: linux/amd64
-    ports:
-      - "8888:8888"
-    volumes:
-      - type: bind
-        source: /tmp/.X11-unix
-        target: /tmp/.X11-unix
-      - type: bind
-        source: /dev
-        target: /dev
-      - type: bind
-        source: ./notebooks/DeepStreamSamples.ipynb
-        target: /opt/nvidia/deepstream/deepstream/samples/DeepStreamSamples.ipynb
-    working_dir: /opt/nvidia/deepstream/deepstream/samples
-
   deepstream-l4t:
     build:
       context: .
-      args:
-        - BASE_IMAGE=nvcr.io/nvidia/deepstream-l4t:6.0-samples
-    environment:
-      - DISPLAY=$DISPLAY
+    cap_add: ["SYSLOG"]
     entrypoint:
       [
-        "jupyter",
-        "lab",
-        "--ip=0.0.0.0",
-        "--no-browser",
-        "--allow-root",
-        "--port=8888",
-        "--ServerApp.token=''",
-        "--ServerApp.password=''",
-        "--ServerApp.allow_origin='*'",
-        "--ServerApp.base_url=/",
+        "deepstream-app",
+        "-c",
+        "samples/configs/deepstream-app/source1_csi_dec_infer_resnet_int8.txt",
       ]
+    environment:
+      - DISPLAY=:0
     hostname: deepstream
     image: deepstream:6.0-jupyter-l4t
+    network_mode: "host"
     platform: linux/arm64
-    ports:
-      - "8888:8888"
+    runtime: nvidia
     volumes:
       - type: bind
         source: /tmp/.X11-unix
         target: /tmp/.X11-unix
       - type: bind
-        source: ./notebooks/DeepStreamSamples.ipynb
-        target: /opt/nvidia/deepstream/deepstream/samples/DeepStreamSamples.ipynb
-    working_dir: /opt/nvidia/deepstream/deepstream/samples
+        source: /tmp/argus_socket
+        target: /tmp/argus_socket
+    working_dir: /opt/nvidia/deepstream/deepstream-6.0
