@@ -19,3 +19,6 @@ RUN git svn clone https://github.com/NVIDIA-AI-IOT/deepstream_reference_apps/tru
     && cp deepstream_app_tao_configs/* tao_pretrained_models/ \
     && rm -rf deepstream_app_tao_configs/ \
     && tao_pretrained_models/download_models.sh
+
+WORKDIR /opt/nvidia/deepstream/deepstream-6.0/samples
+COPY demo.ipynb .

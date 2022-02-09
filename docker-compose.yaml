@@ -13,7 +13,7 @@ services:
         "--no-browser",
         "--allow-root",
         "--port=8888",
-        "--notebook-dir=/opt/nvidia/deepstream/deepstream-6.0",
+        "--notebook-dir=/opt/nvidia/deepstream/deepstream-6.0/samples",
         "--NotebookApp.token=''",
         "--NotebookApp.password=''",
         "--NotebookApp.allow_origin='*'",
@@ -24,9 +24,9 @@ services:
     network_mode: "host"
     platform: linux/amd64
     ports:
-      - "30888:8888"
+      - "8888:8888"
     runtime: nvidia
-    working_dir: /opt/nvidia/deepstream/deepstream-6.0
+    working_dir: /opt/nvidia/deepstream/deepstream-6.0/samples
 
   deepstream-l4t:
     build:
@@ -42,7 +42,7 @@ services:
         "--no-browser",
         "--allow-root",
         "--port=8888",
-        "--notebook-dir=/opt/nvidia/deepstream/deepstream-6.0",
+        "--notebook-dir=/opt/nvidia/deepstream/deepstream-6.0/samples",
         "--NotebookApp.token=''",
         "--NotebookApp.password=''",
         "--NotebookApp.allow_origin='*'",
@@ -62,4 +62,4 @@ services:
       - type: bind
         source: /tmp/argus_socket
         target: /tmp/argus_socket
-    working_dir: /opt/nvidia/deepstream/deepstream-6.0
+    working_dir: /opt/nvidia/deepstream/deepstream-6.0/samples
