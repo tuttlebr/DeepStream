@@ -1,8 +1,8 @@
 # DeepStream
 DeepStream SDK delivers a complete streaming analytics toolkit for real-time AI based video and image understanding and multi-sensor processing. This repo is for NVIDIA Jetson platform (Linux for Tegra) or NVIDIA Amphere GPUs (Linux).
 
-## Lanching the Notebook
-* For both amd64 and arm64 services, you need to enable access to the display of the machine. If you're only able to access remotely, you will only be able to run inference on a video and play it in the notebook, not stream to the display/xhost.
+## Launching the Notebook
+* For both amd64 and arm64 services, you need to enable access to the display of the machine. If you're only able to access remotely, you will only be able to run inference on a video and play it in the notebook, not stream to the display/xhost. There is a notebook called "demo.ipynb" you can use which has more information on how to use your own video and use custom configs.
 
 ```bash
 brandon@olympus:~/DeepStream$ xhost +
