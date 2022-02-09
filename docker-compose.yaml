@@ -1,13 +1,52 @@
 services:
-  deepstream-l4t:
+  deepstream:
     build:
       context: .
+      args:
+        - BASE_IMAGE=nvcr.io/nvidia/deepstream:6.0-samples
     cap_add: ["SYSLOG"]
     entrypoint:
       [
-        "deepstream-app",
-        "-c",
-        "samples/configs/deepstream-app/source1_csi_dec_infer_resnet_int8.txt",
+        "jupyter",
+        "notebook",
+        "--ip=0.0.0.0",
+        "--no-browser",
+        "--allow-root",
+        "--port=8888",
+        "--notebook-dir=/opt/nvidia/deepstream/deepstream-6.0",
+        "--NotebookApp.token=''",
+        "--NotebookApp.password=''",
+        "--NotebookApp.allow_origin='*'",
+        "--NotebookApp.base_url=/",
+      ]
+    hostname: deepstream
+    image: deepstream:6.0-jupyter
+    network_mode: "host"
+    platform: linux/amd64
+    ports:
+      - "30888:8888"
+    runtime: nvidia
+    working_dir: /opt/nvidia/deepstream/deepstream-6.0
+
+  deepstream-l4t:
+    build:
+      context: .
+      args:
+        - BASE_IMAGE=nvcr.io/nvidia/deepstream-l4t:6.0-samples
+    cap_add: ["SYSLOG"]
+    entrypoint:
+      [
+        "jupyter",
+        "notebook",
+        "--ip=0.0.0.0",
+        "--no-browser",
+        "--allow-root",
+        "--port=8888",
+        "--notebook-dir=/opt/nvidia/deepstream/deepstream-6.0",
+        "--NotebookApp.token=''",
+        "--NotebookApp.password=''",
+        "--NotebookApp.allow_origin='*'",
+        "--NotebookApp.base_url=/",
       ]
     environment:
       - DISPLAY=:0
